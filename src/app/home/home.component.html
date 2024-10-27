@@ -1,0 +1,182 @@
+<p>home works!</p>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sonoro Acers</title>
+
+    <link rel="icon" href="../assets/logo1.png" type="image/png" />
+  </head>
+  <body>
+    <header class="body__header">
+      <div class="logo__container">
+        <img
+          class="icons menu__icon"
+          src="../assets/menu-outline.svg"
+          alt="Menu Icon"
+        />
+        <img
+          class="icons logo__icon"
+          src="../assets/logo1.png"
+          alt="Logo Icon"
+        />
+        <p class="logo__text">Sonoro Acers</p>
+      </div>
+
+      <div class="search__container">
+        <input class="search__field" type="text" placeholder="Search" />
+        <img
+          class="icons search__icon"
+          src="../assets/search-circle-outline.svg"
+          alt="Search Icon"
+        />
+        <img
+          class="icons mic__icon"
+          src="../assets/mic-circle-outline.svg"
+          alt="Mic Icon"
+        />
+      </div>
+
+      <div class="user__container">
+        <img
+          class="icons"
+          src="../assets/notifications-circle-outline.svg"
+          alt="Notification Icon"
+        />
+        <img
+          class="icons user__icon"
+          src="../assets/person-circle-outline.svg"
+          alt="User Logo"
+        />
+      </div>
+    </header>
+
+    <div class="body__sidebar">
+      <nav>
+        <ul>
+          <li>
+            <a routerLink="/" class="nav__icon" routerLinkActive="active">
+              Home
+            </a>
+          </li>
+          <li>
+            <a
+              routerLink="/history"
+              class="nav__icon"
+              routerLinkActive="active"
+            >
+              History
+            </a>
+          </li>
+          <li>
+            <a
+              routerLink="/watch-later"
+              class="nav__icon"
+              routerLinkActive="active"
+            >
+              Watch Later
+            </a>
+          </li>
+          <li>
+            <a href="#"> Subscription</a>
+          </li>
+          <li>
+            <a href="#"> Trending</a>
+          </li>
+          <li>
+            <a href="#"> Music</a>
+          </li>
+          <li>
+            <a href="#"> Movies</a>
+          </li>
+          <li>
+            <a href="#"> Gaming</a>
+          </li>
+          <li>
+            <a href="#"> News</a>
+          </li>
+          <li>
+            <a href="#"> Sports</a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+
+    <main class="body__main">
+      <div class="main__container">
+        <div
+          class="content__container"
+          *ngFor="let video of videos; let i = index"
+          (click)="showVideo(video.url)"
+        >
+          <div class="content__thumbnail">
+            <img
+              class="thumbnails"
+              [src]="video.thumbnail"
+              alt="Content Thumbnail"
+            />
+          </div>
+          <div class="content__details__container">
+            <div class="content__avatar">
+              <img class="avatars" [src]="video.avatar" alt="User Avatar" />
+            </div>
+            <div class="content__details">
+              <p class="content__title">{{ video.title }}</p>
+              <p class="user__information content__additional__information">
+                {{ video.author }}
+              </p>
+              <p class="content__additional__information">
+                {{ video.views }} views • {{ video.uploadedAt }}
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div
+        id="videoPopup"
+        class="video__container"
+        *ngIf="showPopup && currentVideoUrl"
+      >
+        <div class="video__subcontainer">
+          <button class="exit__button" (click)="closeVideoPopup()">
+            <img
+              class="icons"
+              src="../assets/close-circle.svg"
+              alt="Exit Button"
+            />
+          </button>
+          <iframe
+            [src]="currentVideoUrl"
+            width="100%"
+            height="100%"
+            frameborder="0"
+            allowfullscreen
+          ></iframe>
+        </div>
+      </div>
+    </main>
+
+    <footer class="body__footer"></footer>
+
+    <script>
+      function showVideo(event) {
+        var videoSource = event.currentTarget.dataset.video;
+        var popupVideo = document.getElementById("popupVideo");
+        popupVideo.src = videoSource;
+
+        var videoPopup = document.getElementById("videoPopup");
+        videoPopup.style.display = "flex";
+      }
+
+      function closeVideoPopup() {
+        var videoPopup = document.getElementById("videoPopup");
+        videoPopup.style.display = "none";
+
+        var popupVideo = document.getElementById("popupVideo");
+        popupVideo.pause();
+      }
+    </script>
+  </body>
+</html>
